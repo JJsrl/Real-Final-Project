@@ -1,13 +1,20 @@
 import { StatusBar } from 'expo-status-bar';
 import { ScrollView, StyleSheet, Text, Button, TouchableOpacity, View } from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import HomePage from './homePage';
+import PDFPage from './PDFPage';
 
+const Stack = createNativeStackNavigator();
 export default function App() {
   return (
-    <ScrollView style = {styles.scrollcontainer}>
-      <Text style = {styles.header}>AI Text Translator</Text>
-      <Button title = "Import PDF" ></Button>
-      <StatusBar style="auto" />
-    </ScrollView>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName='Home'>
+      <Stack.Screen name='Home' component={HomePage} />
+      <Stack.Screen name= 'pdf' component = {PDFPage} />
+      </Stack.Navigator>
+    </NavigationContainer>
+    
   );
 }
 
