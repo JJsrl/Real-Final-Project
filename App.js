@@ -3,7 +3,9 @@ import { ScrollView, StyleSheet, Text, Button, TouchableOpacity, View } from 're
 import {NavigationContainer} from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomePage from './homePage';
-import PDFPage from './PDFPage';
+import BeginnerPage from './BeginnerPage'
+import IntermediatePage from './IntermediatePage';
+import AdvancedPage from './AdvancedPage';
 
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -11,7 +13,9 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Home'>
       <Stack.Screen name='Home' component={HomePage} />
-      <Stack.Screen name= 'pdf' component = {PDFPage} />
+      <Stack.Screen name= 'Beginner' component = {BeginnerPage} />
+      <Stack.Screen name = 'Intermediate' component = {IntermediatePage}/>
+      <Stack.Screen name = 'Advanced' component = {AdvancedPage}/>
       </Stack.Navigator>
     </NavigationContainer>
     

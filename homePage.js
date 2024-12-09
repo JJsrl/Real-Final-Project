@@ -6,8 +6,10 @@ const HomePage = ({navigation}) => {
 return (
     
     <ScrollView style = {styles.scrollcontainer}>
-      <Text style = {styles.header}>AI Text Translator</Text>
-      <Button title = "Import PDF" onPress={() => navigation.navigate("pdf")} ></Button>
+      <Text style = {styles.header}>AI Translator Helper</Text>
+      <Button title = "Beginner Page" onPress={() => navigation.navigate("Beginner")} ></Button>
+      <Button title = "Intermediate Page" onPress={() => navigation.navigate("Intermediate")} ></Button>
+      <Button title = "Advanced Page" onPress={() => navigation.navigate("Advanced")} ></Button>
       <StatusBar style="auto" />
     </ScrollView>
   );
