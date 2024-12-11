@@ -5,7 +5,7 @@ import Configuration from 'openai'
 import OpenAIApi from 'openai'
 
 const configuration = new Configuration({
-  apiKey: 'key here',
+  apiKey: 'api key here',
 })
 
 const openai = new OpenAIApi(configuration)
@@ -20,14 +20,14 @@ const BeginnerPage = ({route, navigation}) => {
       const response = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       messages: [
-        { role: "system", content: "You are a helpful assistant." },
+        { role: "system", content: "You are a very helpful assistant, who is desined to explain things at a very beginner level like they're talking to a 5th grader." },
         {
             role: "user",
             content: userInput,
         },
     ],
       temperature: 0,
-      max_tokens: 60,
+      max_tokens: 1024,
       top_p: 1.0,
       frequency_penalty: 0.5,
       presence_penalty: 0.0,
@@ -51,7 +51,6 @@ const BeginnerPage = ({route, navigation}) => {
         <TouchableOpacity onPress={handleInput}>
           <Text style={styles.text}>Send</Text>
         </TouchableOpacity>
-        <Text>{input}</Text>
         <Text>{output}</Text>
         </ScrollView>
     )
