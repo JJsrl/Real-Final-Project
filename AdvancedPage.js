@@ -4,23 +4,25 @@ import { ScrollView, StyleSheet, Text, Button, TouchableOpacity, View, TextInput
 import Configuration from 'openai'
 import OpenAIApi from 'openai'
 
-const configuration = new Configuration({
-  apiKey: 'api key here',
-})
-
-const openai = new OpenAIApi(configuration)
 
 const AdvancedPage = ({route, navigation}) => {
+  const [apiKey, setApiKey] = useState('hello')
+const configuration = new Configuration({
+  apiKey,
+})
+const openai = new OpenAIApi(configuration)
   const [input, setInput] = React.useState('Type Here!')
   const [output, setOutput] = React.useState('')
+  const [errorText, setErrorText] = React.useState('')
 
   const handleInput = async () => {
     try {
+      setErrorText('')
       const userInput = input
       const response = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       messages: [
-        { role: "system", content: "You are a very helpful assistant, who is desined to explain things at an advanced level like they're talking to a senior college student." },
+        { role: "system", content: "You are a very helpful assistant, who is desined to explain things at a very advanced level like they're talking to a college student or professor." },
         {
             role: "user",
             content: userInput,
@@ -36,6 +38,7 @@ const AdvancedPage = ({route, navigation}) => {
       });
       setOutput(response.choices[0].message.content);
     } catch (error) {
+      setErrorText("There seems to be an error, try again! Maybe the api key is incorrect or there is no text input!")
         console.log(error);
     }
 
@@ -47,14 +50,16 @@ const AdvancedPage = ({route, navigation}) => {
       <ScrollView style = {styles.scrollcontainer}>
         <Text style = {styles.header}>Advanced Translator</Text>
         <Text style = {styles.text}>What would you like to ask?</Text>
+        <TextInput style = {styles.text} placeholder ={"place api here"} onChangeText={setApiKey}/>
         <TextInput style = {styles.text} placeholder ={input} onChangeText={setInput}/>
         <TouchableOpacity onPress={handleInput}>
           <Text style={styles.text}>Send</Text>
         </TouchableOpacity>
+        <Text>{errorText}</Text>
         <Text>{output}</Text>
         </ScrollView>
     )
-    
+
 }
 const styles = StyleSheet.create({
     scrollcontainer: {

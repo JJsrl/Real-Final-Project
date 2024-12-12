@@ -1,21 +1,26 @@
 import React, {useState} from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { ScrollView, StyleSheet, Text, Button, TouchableOpacity, View, TextInput, FlatList } from 'react-native';
+import { ScrollView, StyleSheet, Text, Button, TouchableOpacity, View, TextInput, FlatList, Alert } from 'react-native';
 import Configuration from 'openai'
 import OpenAIApi from 'openai'
 
-const configuration = new Configuration({
-  apiKey: 'api key here',
-})
 
-const openai = new OpenAIApi(configuration)
+
+  
 
 const BeginnerPage = ({route, navigation}) => {
+  const [apiKey, setApiKey] = useState('hello')
+const configuration = new Configuration({
+  apiKey,
+})
+const openai = new OpenAIApi(configuration)
   const [input, setInput] = React.useState('Type Here!')
   const [output, setOutput] = React.useState('')
+  const [errorText, setErrorText] = React.useState('')
 
   const handleInput = async () => {
     try {
+      setErrorText('')
       const userInput = input
       const response = await openai.chat.completions.create({
       model: "gpt-4o-mini",
@@ -36,6 +41,7 @@ const BeginnerPage = ({route, navigation}) => {
       });
       setOutput(response.choices[0].message.content);
     } catch (error) {
+      setErrorText("There seems to be an error, try again! Maybe the api key is incorrect")
         console.log(error);
     }
 
@@ -47,14 +53,16 @@ const BeginnerPage = ({route, navigation}) => {
       <ScrollView style = {styles.scrollcontainer}>
         <Text style = {styles.header}>Beginner Translator</Text>
         <Text style = {styles.text}>What would you like to ask?</Text>
+        <TextInput style = {styles.text} placeholder ={"place api here"} onChangeText={setApiKey}/>
         <TextInput style = {styles.text} placeholder ={input} onChangeText={setInput}/>
         <TouchableOpacity onPress={handleInput}>
           <Text style={styles.text}>Send</Text>
         </TouchableOpacity>
+        <Text>{errorText}</Text>
         <Text>{output}</Text>
         </ScrollView>
     )
-    
+
 }
 const styles = StyleSheet.create({
     scrollcontainer: {
